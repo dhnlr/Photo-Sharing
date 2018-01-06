@@ -8,22 +8,34 @@ class FeedController {
 		User.findOne({'_id': req.decoded.userId})
 		.then((user)=>{
 			let photoArr = []
-			for (var i = user.following.length - 1; i >= 0; i--) {
-				Photo.find({'author': user.following[i]}).populate('author').exec()
-				.then( photo => {
-					photoArr = photoArr.concat(photo)
-				})
-				if (i == 0) {
-					Photo.find({'author': req.decoded.userId}).populate('author').exec()
-					.then( photos => {
-						photoArr = photoArr.concat(photos)
-						res.status(200).json({
-							message: 'Success',
-							data : photoArr
-						})
+			if (user.following.length>0) {
+				for (var i = user.following.length - 1; i >= 0; i--) {
+					Photo.find({'author': user.following[i]}).populate('author').exec()
+					.then( photo => {
+						photoArr = photoArr.concat(photo)
 					})
+					if (i == 0) {
+						Photo.find({'author': req.decoded.userId}).populate('author').exec()
+						.then( photos => {
+							photoArr = photoArr.concat(photos)
+							res.status(200).json({
+								message: 'Success',
+								data : photoArr
+							})
+						})
+					}
 				}
+			} else if (user.following.length == 0) {
+				Photo.find({'author': req.decoded.userId}).populate('author').exec()
+				.then( photos => {
+					photoArr = photoArr.concat(photos)
+					res.status(200).json({
+						message: 'Success',
+						data : photoArr
+					})
+				})
 			}
+			
 		})
 		.catch( error => {
 			console.log(error)
