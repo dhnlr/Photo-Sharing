@@ -31,7 +31,15 @@ User who has account can publish their photo, another user can follow you to see
 
 ## I want try this
 
-No demo for this project. I hope I can deploy this for demo pupose as soon as I want. 
+You can try this at [Photo](http://photo.dhnlr.com)
+
+Demo account
+```
+username : coba
+password : coba
+```
+
+*Ps. I don't make sure that link always runs and don't abuse this database or CPU usage* 
 
 ## How about license?
 All my work licensed with AGPL 3.0. All other work belongs to their owner with their license.
