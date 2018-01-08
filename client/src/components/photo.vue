@@ -16,8 +16,16 @@
             </section>
             <hr/>
             <section class="addcomment">
-              <div class="field">
-                <div class="control has-icons-right">
+              <div class="field is-grouped">
+                <p class="control">
+                  <a class="button is-info" @click="like()" v-if="islike">
+                    <i class="fa fa-heart" aria-hidden="true"></i>
+                  </a>
+                  <a class="button is-info" @click="like()" v-else>
+                    <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+                  </a>
+                </p>
+                <div class="control is-expanded has-icons-right">
                   <input class="input" type="text" placeholder="Comment" v-model="comments" @keyup.enter="addComment()" v-if="isedit == false">
                   <input class="input" type="text" placeholder="Comment" v-model="comments" @keyup.enter="editedComment()" v-if="isedit">
                   <span class="icon is-small is-right">
@@ -95,6 +103,23 @@ export default {
       .then(function (resp) {
         location.reload()
       })
+    },
+    like: function (id) {
+      let _this = this
+      axios.put(`http://localhost:3000/photos/${_this.$route.params.photo}/likes`, {}, {headers:{
+        'token': localStorage.getItem('token')
+      }})
+      .then(function (resp) {
+        location.reload()
+      })
+    }
+  },
+  computed: {
+    islike: function () {
+      let _this = this
+      if(_this.photo.likes.indexOf(_this.userId)){
+        return true
+      }
     }
   },
   mounted: function () {

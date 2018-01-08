@@ -14,6 +14,7 @@ router.post('/', auth, images.multer.single('image'), images.uploadCloudinari, i
 router.post('/:id/comments', auth, commentController.create, photoController.createComment);
 router.put('/:id', auth, author, photoController.update);
 router.put('/:id/comments/:comment', auth, commentController.update);
+router.put('/:id/likes', auth, photoController.like);
 router.delete('/:id', auth, author, photoController.destroy);
 router.delete('/:id/comments/:comment', auth, commentController.destroy);
 
