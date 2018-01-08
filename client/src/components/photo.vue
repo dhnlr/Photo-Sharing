@@ -21,7 +21,9 @@
                   <a class="button is-info" @click="like()" v-if="islike">
                     <i class="fa fa-heart" aria-hidden="true"></i>
                   </a>
-                  <p v-else>Liked</p>
+                  <a class="button is-info" @click="like()" v-else>
+                    <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+                  </a>
                 </p>
                 <div class="control is-expanded has-icons-right">
                   <input class="input" type="text" placeholder="Comment" v-model="comments" @keyup.enter="addComment()" v-if="isedit == false">
