@@ -116,6 +116,47 @@ class PhotoController {
 			})
 		})
 	}
+	static like (req, res){
+		Photo.findOne({'_id': req.params.id})
+		then( photo => {
+			if (photo.author != req.decoded.userId) {
+				if (photo.like.indexOf(req.decoded.userId) == -1) {
+					photo.like.push(req.decoded.userId)
+					Photo.findOneAndUpdate({'_id': req.params.id}, {$set: photo}, {upsert: true, new : true})
+					.then(data=>{
+						res.status(200).json({
+							message: 'Success',
+							data: data
+						})
+					})
+					.catch(error=>{
+						res.status(200).json({
+							message: 'Error',
+							error: error
+						})
+					})
+				}
+				else if (photo.like.indexOf(req.decoded.userId) != -1) {
+					photo.like.splice(photo.like.indexOf(req.decoded.userId), 1)
+					Photo.findOneAndUpdate({'_id': req.params.id}, {$set: photo}, {upsert: true, new : true})
+					.then(data=>{
+						res.status(200).json({
+							message: 'Success',
+							data: data
+						})
+					})
+					.catch(error=>{
+						res.status(200).json({
+							message: 'Error',
+							error: error
+						})
+					})
+				}
+			}
+			
+		})
+		
+	}
 	static destroy (req, res){
 		Photo.remove({'_id': req.params.id})
 		.then(data=>{

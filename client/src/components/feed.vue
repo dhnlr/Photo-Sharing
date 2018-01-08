@@ -25,7 +25,9 @@
             <router-link :to="{'name': 'photo', params: {'username': feed.author[0].username, 'photo':feed._id}}" class="card-footer-item">
               {{feed.comment.length}} Comment
             </router-link>
-            <a class="card-footer-item">Share</a>
+            <router-link :to="{'name': 'photo', params: {'username': feed.author[0].username, 'photo':feed._id}}" class="card-footer-item">
+              {{feed.likes.length}} Like
+            </router-link>
           </footer>
         </div>
       </div>
