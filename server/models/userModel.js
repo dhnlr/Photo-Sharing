@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 const ObjectId = mongoose.Types.ObjectId; 
 const Schema = mongoose.Schema;
 
@@ -6,7 +7,9 @@ const UserSchema = new Schema({
 	username: {
 		type: String,
 		required: true,
+		trim: true,
 		lowercase: true,
+		unique: true,
 		validate: /([a-z])\w+/
 	},
 	password: {
@@ -23,6 +26,7 @@ const UserSchema = new Schema({
 	}]
 })
 
+UserSchema.plugin(uniqueValidator, { message: 'Username {VALUE} already registered' });
 const User = mongoose.model('User', UserSchema);
 
 const create = (data, callback) => {

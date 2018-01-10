@@ -12,11 +12,11 @@
             <div class="field">
               <label class="label">Caption</label>
               <div class="control">
-                <input class="input" type="text" placeholder="Caption" v-model="photo.caption">
+                <input class="input" type="text" placeholder="Caption" :disabled="isprocess" v-model="photo.caption">
               </div>
             </div>
             <div class="control">
-              <button class="button is-warning is-rounded" @click="submit()">Edit</button>
+              <button class="button is-warning is-rounded" :class="{ is-loading: isprocess }" @click="submit()">Edit</button>
             </div>
           </div>
         </div>
@@ -36,11 +36,13 @@ export default {
   data () {
     return {
       photo: {},
+      isprocess: false
     }
   },
   methods: {
     submit: function () {
       let _this = this
+      _this.isprocess = true
       axios.put(`http://localhost:3000/photos/${_this.$route.params.photo}`, {
           caption: _this.photo.caption,
         }, {headers: {
@@ -48,6 +50,7 @@ export default {
       }})
       .then(function (resp) {
         _this.photo = {}
+        _this.isprocess = false
         _this.$router.go(-1)
       })
     },

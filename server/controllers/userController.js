@@ -91,7 +91,7 @@ class UserController {
 			else {
 				res.status(400).json({
 					message: 'Error occured',
-					data: error
+					error: error
 				})
 			}
 		})

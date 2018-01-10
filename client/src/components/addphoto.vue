@@ -18,7 +18,7 @@
       <div class="field">
         <div class="file is-centered is-warning is-boxed">
           <label class="file-label">
-            <input class="file-input" type="file" name="image" @change="onFileChange">
+            <input class="file-input" type="file" name="image" :disabled="isprocess" @change="onFileChange">
             <span class="file-cta">
               <span class="file-icon">
                 <i class="fa fa-cloud-upload"></i>
@@ -98,11 +98,11 @@
       <div class="field">
         <label class="label">Caption</label>
         <div class="control">
-          <input class="input" type="text" placeholder="Caption" v-model="caption">
+          <input class="input" type="text" placeholder="Caption" :disabled="isprocess" v-model="caption">
         </div>
       </div>
       <div class="control">
-        <button class="button is-info is-rounded" @click="submit()">Add</button>
+        <button class="button is-info is-rounded" :class="{ is-loading: isprocess }" @click="submit()">Add</button>
       </div>
     </div>
   </div>
@@ -124,6 +124,7 @@ export default {
       imagemetada : null,
       imageeffect: '',
       caption: '',
+      isprocess: false
     }
   },
   methods: {
@@ -149,6 +150,7 @@ export default {
     },
     submit: function () {
       let _this = this;
+      this.isprocess = true
       let formdata = new FormData()
       formdata.append('image', _this.imagemetada)
       formdata.append('effect', _this.imageeffect)
@@ -162,6 +164,7 @@ export default {
         _this.imagemetada = null
         _this.imageeffect = null
         _this.caption = ''
+        _this.isprocess = false
       })
     },
   }

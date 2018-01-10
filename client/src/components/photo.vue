@@ -26,8 +26,8 @@
                   </a>
                 </p>
                 <div class="control is-expanded has-icons-right">
-                  <input class="input" type="text" placeholder="Comment" v-model="comments" @keyup.enter="addComment()" v-if="isedit == false">
-                  <input class="input" type="text" placeholder="Comment" v-model="comments" @keyup.enter="editedComment()" v-if="isedit">
+                  <input class="input" type="text" placeholder="Comment" :disabled="isprocess" v-model="comments" @keyup.enter="addComment()" v-if="isedit == false">
+                  <input class="input" type="text" placeholder="Comment" :disabled="isprocess" v-model="comments" @keyup.enter="editedComment()" v-if="isedit">
                   <span class="icon is-small is-right">
                     <i class="fa fa-comment"></i>
                   </span>
@@ -60,6 +60,7 @@ export default {
       username: null,
       isedit: false,
       commentsId : null,
+      isprocess: false
     }
   },
   methods:{
@@ -68,6 +69,7 @@ export default {
     },
     addComment: function () {
       let _this = this
+      _this.isprocess = true
       axios.post(`http://localhost:3000/photos/${_this.$route.params.photo}/comments/`, {
         content: _this.comments,
         photoId: _this.photo._id,
@@ -75,6 +77,7 @@ export default {
         'token': localStorage.getItem('token')
       }})
       .then(function (resp) {
+        _this.isprocess = false
         location.reload()
       })
     },
@@ -85,22 +88,26 @@ export default {
     },
     editedComment: function () {
       let _this = this
+      _this.isprocess = true
       axios.put(`http://localhost:3000/photos/${_this.$route.params.photo}/comments/${_this.commentsId}`, {
         content: _this.comments
       }, {headers:{
         'token': localStorage.getItem('token')
       }})
       .then(function (resp) {
+        _this.isprocess = false
         location.reload()
       })
     },
     destroyComment: function (id) {
       let _this = this
       _this.commentsId = id
+      _this.isprocess = true
       axios.delete(`http://localhost:3000/photos/${_this.$route.params.photo}/comments/${_this.commentsId}`, {headers:{
         'token': localStorage.getItem('token')
       }})
       .then(function (resp) {
+        _this.isprocess = false
         location.reload()
       })
     },
