@@ -9,20 +9,18 @@
         </div>
         <div class="column right">
             <section class="user has-text-centered">
-              <h1 class="title">{{photo.author[0].username}}</h1>
+              <h1 class="title">{{photo.author[0].username.toUpperCase()}}</h1>
             </section>
             <section class="caption">
-              <p class="subtitle is-size-6">{{photo.caption}}</p>
+              <p class="subtitle heading is-size-6">{{photo.caption}}</p>
             </section>
             <hr/>
             <section class="addcomment">
               <div class="field is-grouped">
                 <p class="control">
-                  <a class="button is-info" @click="like()" v-if="islike">
-                    <i class="fa fa-heart" aria-hidden="true"></i>
-                  </a>
-                  <a class="button is-info" @click="like()" v-else>
-                    <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+                  <a class="button is-warning" @click="like()" v-if="!ismine">
+                    <i class="fa fa-heart" aria-hidden="true" v-if="islike"></i>
+                    <i class="fa fa-heart" aria-hidden="true" style="color: red !important;" v-if="!islike"></i>
                   </a>
                 </p>
                 <div class="control is-expanded has-icons-right">
@@ -55,12 +53,21 @@ export default {
   name: 'photo',
   data () {
     return {
-      photo: {},
+      photo: {
+        __v: null,
+        _id: null,
+        author: [{}],
+        caption: null,
+        comment: [],
+        like: [],
+        link: null
+      },
       comments: null,
       username: null,
       isedit: false,
       commentsId : null,
-      isprocess: false
+      isprocess: false,
+      userId: null
     }
   },
   methods:{
@@ -113,10 +120,12 @@ export default {
     },
     like: function (id) {
       let _this = this
+      _this.isprocess = true
       axios.put(`http://localhost:3000/photos/${_this.$route.params.photo}/likes`, {}, {headers:{
         'token': localStorage.getItem('token')
       }})
       .then(function (resp) {
+        _this.isprocess = false
         location.reload()
       })
     }
@@ -124,14 +133,18 @@ export default {
   computed: {
     islike: function () {
       let _this = this
-      if(_this.photo.likes.indexOf(_this.userId)){
+      if(_this.photo.like.indexOf(_this.userId) == -1){
         return true
       }
+    },
+    ismine: function () {
+      return (this.photo.author[0].username == this.username) 
     }
   },
-  mounted: function () {
+  created: function () {
     let _this = this
     this.username = localStorage.getItem('username')
+    this.userId = localStorage.getItem('userId')
     axios.get(`http://localhost:3000/photos/${_this.$route.params.photo}/c`, {headers:
       {'token': localStorage.getItem('token')}
     })

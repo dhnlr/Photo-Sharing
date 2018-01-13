@@ -1,6 +1,6 @@
 <template>
-  <div class="container is-fluid">
-    <nav class="level navuser">
+  <div>
+    <nav class="level">
       <!-- Left side -->
       <div class="level-left">
         <div class="level-item">
@@ -10,7 +10,7 @@
           </p>
           <p class="heading is-size-6" v-if="isme">
             <a class="button is-info" v-if="isfollow == 1" @click="follow(user._id)">Follow</a>
-            <a class="button is-white" v-if="isfollow == 2"><em>Following</em></a>
+            <a class="button is-danger" v-if="isfollow == 2" @click="follow(user._id)">Unfollow</a> <em>Following</em>
           </p>
         </div>
         </div>
@@ -55,20 +55,13 @@
 </template>
 
 <script>
-import * as axios from 'axios';
-
 export default {
 
-  name: 'user',
+  name: 'UserPhoto',
 
   data () {
     return {
-      user: {
-        __v: null,
-        _id: null,
-        follower: [],
-        following: []
-      },
+      user: {},
       photos: [],
       username: null,
       userId: null
@@ -141,9 +134,6 @@ export default {
   .photos{
     display: flex;
     flex-wrap: wrap;
-  }
-  .navuser{
-    padding: 2em 0;
   }
   @media only screen and (max-device-width: 400px){
     .card {

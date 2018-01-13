@@ -37,7 +37,7 @@
               </div>
               <div class="field is-grouped is-grouped-centered">
                 <p class="control">
-                  <a class="button is-info is-rounded" :class="{ is-loading: isprocess }"> @click="login()">
+                  <a class="button is-info is-rounded" :class="{ 'is-loading': isprocess }" @click="login()">
                     Signin
                   </a>
                 </p>
@@ -86,7 +86,7 @@
           </div>
           <div class="field is-grouped is-grouped-centered">
             <p class="control">
-              <a class="button is-info is-rounded" :class="[samepassword ? '' : 'is-is-loading']" @click="signup()">
+              <a class="button is-info is-rounded" :class="{ 'is-loading': isprocess }" @click="signup()">
                 Signup
               </a>
             </p>

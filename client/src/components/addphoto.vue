@@ -102,7 +102,7 @@
         </div>
       </div>
       <div class="control">
-        <button class="button is-info is-rounded" :class="{ is-loading: isprocess }" @click="submit()">Add</button>
+        <button class="button is-info is-rounded" :class="{ 'is-loading': isprocess }" @click="submit()">Add</button>
       </div>
     </div>
   </div>

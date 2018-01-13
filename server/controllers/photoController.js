@@ -118,7 +118,9 @@ class PhotoController {
 	}
 	static like (req, res){
 		Photo.findOne({'_id': req.params.id})
-		then( photo => {
+		.then( photo => {
+			console.log(photo, 'ini photonya')
+			console.log(photo.author, req.decoded.userId)
 			if (photo.author != req.decoded.userId) {
 				if (photo.like.indexOf(req.decoded.userId) == -1) {
 					photo.like.push(req.decoded.userId)
@@ -130,7 +132,7 @@ class PhotoController {
 						})
 					})
 					.catch(error=>{
-						res.status(200).json({
+						res.status(400).json({
 							message: 'Error',
 							error: error
 						})
@@ -146,7 +148,7 @@ class PhotoController {
 						})
 					})
 					.catch(error=>{
-						res.status(200).json({
+						res.status(400).json({
 							message: 'Error',
 							error: error
 						})

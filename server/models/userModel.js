@@ -65,12 +65,12 @@ const readUsername = (username, callback) => {
 }
 
 const readSearchUsername = (username, callback) => {
-	User.find({'username': new RegExp('('+username+')\\w+', "gi")}, (error, data)=>{
-		if (!error) {
-			callback(null, data)
-		} else {
-			callback(error, null)
-		}
+	User.find().where('username', new RegExp('('+username+')', "gi"))
+	.then(data=>{
+		callback(null, data)
+	})
+	.catch(error=>{
+		callback(error, null)
 	})
 }
 
@@ -104,4 +104,4 @@ const destroy = (id, callback) => {
 	})
 }
 
-module.exports = {User, create, read, readId, readUsername, update, destroy, signIn};
+module.exports = {User, create, read, readId, readUsername, readSearchUsername, update, destroy, signIn};

@@ -26,7 +26,7 @@
               {{feed.comment.length}} Comment
             </router-link>
             <router-link :to="{'name': 'photo', params: {'username': feed.author[0].username, 'photo':feed._id}}" class="card-footer-item">
-              {{feed.likes.length}} Like
+              {{feed.like.length}} Like
             </router-link>
           </footer>
         </div>
@@ -57,6 +57,7 @@ export default {
       token: localStorage.getItem('token')
     }})
     .then( function (resp) {
+      console.log(resp)
       _this.feedList = resp.data.data
     })
   }
@@ -65,6 +66,6 @@ export default {
 
 <style lang="css" scoped>
   .kartu{
-    padding: 1em 0.25em;
+    padding: 2em 0.25em;
   }
 </style>

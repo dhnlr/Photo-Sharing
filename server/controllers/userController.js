@@ -1,4 +1,4 @@
-const {User, create, read, readId, readUsername, update, destroy, signIn} = require('../models/userModel');
+const {User, create, read, readId, readUsername, readSearchUsername, update, destroy, signIn} = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -35,6 +35,21 @@ class UserController {
 	}
 	static getUserUsename(req,res){
 		readUsername(req.params.username, (error, user)=>{
+			if (user) {
+				res.status(200).json({
+					message: 'Users summoned',
+					data: user,
+				})
+			}
+			else {
+				res.status(400).json({
+					message: 'Error occured'
+				})
+			}
+		})
+	}
+	static searchUsername(req,res){
+		readSearchUsername(req.query.q, (error, user)=>{
 			if (user) {
 				res.status(200).json({
 					message: 'Users summoned',
