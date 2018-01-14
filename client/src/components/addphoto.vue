@@ -31,7 +31,12 @@
         </div>
       </div>
       <div class="field">
-        <label class="label">Effect</label>
+        <label class="label">
+          Effect 
+          <a v-if="imageeffect" @click="imageeffect = null">
+           Reset
+          </a>
+        </label>
         <div class="effect has-text-centered">
           <div class="photoeffect">
             <a><img class="image" @click="chooseeffect('al_dente')" src="https://res.cloudinary.com/david-wash-blog/image/upload/e_art:al_dente,w_200,c_scale/v1482336611/yenaei3ibh7xkngv3teq.jpg">al_dente</a>
@@ -122,7 +127,7 @@ export default {
     return {
       image: '',
       imagemetada : null,
-      imageeffect: '',
+      imageeffect: null,
       caption: '',
       isprocess: false
     }

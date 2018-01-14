@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav class="navbar awal" role="navigation" aria-label="main navigation">
+    <nav class="navbar awal" role="navigation" aria-label="main navigation" v-if="token">
       <div class="navbar-brand">
         <router-link class="navbar-item" to="/">
           <img src="./assets/logo.png" title="Photo Sharing" alt="Logo" width="auto" height="28">
@@ -14,7 +14,7 @@
         </button>
       </div>
       <div class="navbar-menu" id="navMenu">
-        <div class="navbar-start">
+        <div class="navbar-start" v-if="token">
           <div class="field navbar-item has-dropdown is-active">
             <div class="control has-icons-right">
               <input class="input" type="text" placeholder="Search username" v-model="search" @keyup.enter="findUsername">
@@ -24,7 +24,7 @@
             </div>
             <div class="navbar-dropdown" :class="[searchResult.length>5?'search':'']" v-if="searchResult.length>0" v-for="res in searchResult">
               <router-link :to="{ name: 'user', params: { 'username': res.username }}" class="navbar-item">
-                {{res.username}}
+                <p @click="reset">{{res.username}}</p>
               </router-link>
             </div>
           </div>
@@ -77,6 +77,10 @@ export default {
     }
   },
   methods: {
+    reset: function () {
+      this.search = null
+      this.searchResult = []
+    },
     signout: function () {
       this.token = null
       this.username = null
@@ -90,7 +94,6 @@ export default {
         'token': localStorage.token
       }})
       .then(resp=>{
-        console.log(resp)
         _this.searchResult = resp.data.data
       })
     }
