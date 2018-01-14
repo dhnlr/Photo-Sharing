@@ -12,6 +12,7 @@ router.put('/:id', auth, userController.updateUser);
 router.delete('/:id', auth, userController.deleteUser);*/
 
 router.get('/', auth, feedController.feed);
+router.get('/search', auth, userController.searchUsername)
 router.get('/:username', auth, userController.getUserUsename)
 router.put('/:id/follow', auth, userController.followUser);
 
