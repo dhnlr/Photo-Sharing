@@ -57,7 +57,6 @@ export default {
       token: localStorage.getItem('token')
     }})
     .then( function (resp) {
-      console.log(resp)
       _this.feedList = resp.data.data
     })
   }

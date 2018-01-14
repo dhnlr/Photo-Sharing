@@ -112,6 +112,28 @@ export default {
       })
     }
   },
+  computed: {
+    pusername () {
+      return this.$route.params.username
+    }
+  },
+  watch: {
+    pusername () {
+      let _this = this
+      axios.get(`http://localhost:3000/users/${_this.$route.params.username}`, {headers: {
+        token: localStorage.getItem('token')
+      }})
+      .then(function (resp) {
+        _this.user = resp.data.data
+        axios.get(`http://localhost:3000/photos/username/${_this.user._id}`, {headers: {
+          token: localStorage.getItem('token')
+        }})
+        .then(function (resp) {
+          _this.photos = resp.data.data
+        })
+      })
+    }
+  },
   created: function () {
     let _this = this
     this.username = localStorage.getItem('username')

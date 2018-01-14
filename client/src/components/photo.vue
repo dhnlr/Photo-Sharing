@@ -1,6 +1,6 @@
 <template>
   <div class="modal is-active">
-    <div class="modal-background"></div>
+    <div class="modal-background" @click="goback()"></div>
     <div class="modal-content">
     <div class="box is-radiusless">
       <div class="columns">
@@ -22,6 +22,10 @@
                     <i class="fa fa-heart" aria-hidden="true" v-if="islike"></i>
                     <i class="fa fa-heart" aria-hidden="true" style="color: red !important;" v-if="!islike"></i>
                   </a>
+                  <a class="button" v-if="photo.like.length > 0" @click="isshowlike = true">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                  </a>
+                  <like :liked="photo.like" @close="isshowlike = false" v-show="isshowlike"></like>
                 </p>
                 <div class="control is-expanded has-icons-right">
                   <input class="input" type="text" placeholder="Comment" :disabled="isprocess" v-model="comments" @keyup.enter="addComment()" v-if="isedit == false">
@@ -48,15 +52,19 @@
 
 <script>
 import * as axios from 'axios';
+import like from './like'
 
 export default {
   name: 'photo',
+  components: {like},
   data () {
     return {
       photo: {
         __v: null,
         _id: null,
-        author: [{}],
+        author: [{
+          username: ' '
+        }],
         caption: null,
         comment: [],
         like: [],
@@ -67,7 +75,8 @@ export default {
       isedit: false,
       commentsId : null,
       isprocess: false,
-      userId: null
+      userId: null,
+      isshowlike: false
     }
   },
   methods:{
