@@ -10,8 +10,8 @@ Users who have an account can publish their photo, another user can follow other
 * 20 filter effect
 * CRUD for comment
 * Like and unlike
-* Follow; without pending follow, unfollow, or block (We care about your real life relationship)
-> You can implement unfollow in your client, there's an API to do that. I just don't want it
+* Follow and unfollow
+* Search username
 
 ## What's the roadmap?
 
@@ -46,8 +46,6 @@ username : follow
 password : follow
 ```
 `Follow` already followed `coba`. Only `coba` has photo in its account. You can see feed example on `Follow` account.
-
-#### No like feature in demo!
 
 *Ps. I don't make sure that link always runs and please don't abuse database or CPU usage* 
 
