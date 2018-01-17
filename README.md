@@ -24,6 +24,7 @@ Users who have an account can publish their photo, another user can follow other
 1. npm install
 2. npm start
 ```
+[Server API](https://github.com/dhnlr/Photo-Sharing/tree/master/server)
 
 #### Client
 ```
